@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var ws = require("socket.io")(http);
 var cfenv = require('cfenv');
-var IoTApp  = require('./application/application.js');
+var IoTApp = require('./application/application.js');
 
 /* Serve the files out of ./public as our main files. */
 app.use(express.static(__dirname + '/public'));
@@ -14,8 +14,8 @@ app.use(express.static(__dirname + '/public'));
   cfenv will use the file defined by vcapFile instead.
   You can export these local json files from IBM Cloud!
 */
-var app_env = cfenv.getAppEnv({vcapFile: 'vcap.json'});
-const IOT_PLATFORM = "NAME";
+var app_env = cfenv.getAppEnv({ vcapFile: 'vcap.json' });
+const IOT_PLATFORM = "Internet of Things Platform";
 
 /* Retrieve Cloud Foundry environment variables. */
 var credentials = app_env.getServiceCreds(IOT_PLATFORM);
@@ -23,8 +23,8 @@ var application = new IoTApp(credentials.org, credentials.apiKey, credentials.ap
 
 /* Application is an event emitter, so we listen for the payload event we defined in application.js! */
 application.on('payload', function(data) {
-  /* We then broadcast to our clients.  */
-  ws.emit('broadcast', JSON.parse(data).temp);
+    /* We then broadcast to our clients.  */
+    ws.emit('broadcast', JSON.parse(data).temp);
 });
 
 /* Start server on the specified port and binding host app_env.port */
