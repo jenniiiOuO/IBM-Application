@@ -4,4 +4,4 @@ applications:
   memory: 128M
   buildpack: sdk-for-nodejs
   services:
-  - Internet of Things Platform
+  - Internet of Things Platform-pd
